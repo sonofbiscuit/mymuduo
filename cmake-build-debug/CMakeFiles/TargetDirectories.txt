@@ -1,0 +1,3 @@
+/Users/zhangqing/projectInLinux/mymuduo/cmake-build-debug/CMakeFiles/mymuduo.dir
+/Users/zhangqing/projectInLinux/mymuduo/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/zhangqing/projectInLinux/mymuduo/cmake-build-debug/CMakeFiles/rebuild_cache.dir
