@@ -43,7 +43,16 @@ public:
     void queueInLoop(functor cb);
 
     /**
-     * 唤醒loop所在的线程， 通过eventfd进行线程唤醒
+     * muduo 是个多 reactor 网络库， 也支持单reactor
+     * 如果当前只有一个单reactor ，那么难以承受高并发。可以使用多核的优势
+     * muduo 创建了多个线程，创建多个reactor，去进行事件循环处理。每个reactor都可以当作一个epoll wait
+     *
+     * 一个主reactor去处理当前请求的到来，进行接收，然后将返回的fd分发给子reactor进行处理用户连接请求中的数据
+     *
+     * ==WAKEUP==
+     * 如果当前主reactor中有一个回调函数，需要交给子reactor进行执行
+     * 但是当前子reactor没有事件发生，一直阻塞在epoll_wait阶段，所以主reactor没法将cb注册到子reactor之中
+     * wakeup的作用就是取消子reactor的阻塞
      * */
     void wakeupThd();
 
@@ -87,6 +96,9 @@ private:
 
     void doPendingFunctors();  // 执行存储的回调函数
 
+    // 给eventfd返回的文件描述符wakeupFd_绑定的事件回调 当wakeup()时 即有事件发生时 调用handleRead()读wakeupFd_的8字节 同时唤醒阻塞的epoll_wait
+    // handleRead是wakeup fd所绑定的一个回调
+    // fd和回调函数的绑定就是通过channel
     /**
      * 我们是通过eventfd唤醒loop所在的线程，最终能返回一个文件描述符wakeupFd_
      * 给这个文件描述符绑定回调
