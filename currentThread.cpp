@@ -5,6 +5,11 @@
 #include "currentThread.h"
 
 namespace currentThread{
+    /**
+     * __thread是线程的局部存储设施，
+     * 每个线程独有一份__thread，各个线程的值互不干扰
+     * 通过cache 的 id 来获取 线程id
+     * */
     __thread int t_cachedTid = 0;
 
     void cacheTid(){
