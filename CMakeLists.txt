@@ -7,4 +7,4 @@ include_directories(.)
 
 add_executable(mymuduo
         TimeStamp.cpp
-        TimeStamp.h EventLoop.cpp EventLoop.h nonCopyable.h currentThread.cpp currentThread.h Channel.cpp Channel.h Logger.cpp Logger.h Poller.cpp Poller.h)
+        TimeStamp.h EventLoop.cpp EventLoop.h nonCopyable.h currentThread.cpp currentThread.h Channel.cpp Channel.h Logger.cpp Logger.h Poller.cpp Poller.h EPollPoller.cpp EPollPoller.h)
