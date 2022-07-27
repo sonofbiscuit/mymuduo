@@ -10,6 +10,15 @@
 #include "Poller.h"
 #include "TimeStamp.h"
 
+/**
+ * 要把A放到B里，永远只需要三步，把fd放到epoll里也不例外：
+ * 打开epoll
+ * 把fd扔进去
+ * 等待
+ *  int epoll_create(int size)；
+    int epoll_ctl(int epfd, int op, int fd, struct epoll_event *event)；
+    int epoll_wait(int epfd, struct epoll_event * events, int maxevents, int timeout);
+ * */
 
 /**
  * epoll的功能:
@@ -58,7 +67,7 @@ private:
      * */
     using EventList = std::vector<epoll_event>;
 
-    int epollfd_;    // event_create创建返回的fd保存在epollfd_
+    int epollfd_;    // 代表新创建的epoll实例的文件描述符(event_create函数的返回值)
     EventList events_;   // 用于存放epoll_wait返回的所有发生的事件的文件描述符事件集合
 
 };

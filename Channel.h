@@ -90,7 +90,7 @@ private:
     const int fd_;  // poller监听的对象
     int events_; // 注册fd感兴趣的事件
     int revents_;  // poller返回的具体发生的事件
-    int index_;  // used by poller
+    int index_;  // used by poller, 对于我们所使用的Epoll， 表示 kNew, kAdded, kDeleted
 
     std::weak_ptr<void> tie_;  // muduo中的弱回调，改变对象的生命周期问题
     bool tied_;  // a对象调用b对象，b对象还没销毁，但是a马上要销毁，那么来延长生命周期
