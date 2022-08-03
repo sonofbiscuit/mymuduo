@@ -41,7 +41,7 @@ TimeStamp EPollPoller::poll(int timeoutMs, channelList *activeChannels) {
 
     // epoll_wait 等待和监听事件，若发生，则返回发生事件的数目
     int numEvents = ::epoll_wait(epollfd_, &*events_.begin(), static_cast<int>(events_.size()), timeoutMs);
-    int saveErrno = errno;
+    int saveErrno = errno;  // errno 是记录系统的最后一次错误代码
     TimeStamp now(TimeStamp::now());
 
     if(numEvents>0){  // 有事件发生,此时这些事件的fd已经存在了events_中
@@ -51,9 +51,12 @@ TimeStamp EPollPoller::poll(int timeoutMs, channelList *activeChannels) {
             events_.re
         }
     }else if(numEvents == 0){  // 超时
-
-    }else{  // 无
-
+        LOG_DEBUG("%s time out! \n", __FUNCTION__ );
+    }else{  // 无事件发生
+        if(saveErrno != EINTR){  // 如果错误为EINTR表示在读/写的时候出现了中断错误
+            error = saveErrno;
+            LOG_ERROR("EPollPoller::poll() error!");
+        }
     }
 }
 
