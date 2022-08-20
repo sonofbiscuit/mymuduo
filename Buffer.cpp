@@ -43,6 +43,12 @@ ssize_t Buffer::readFd(int fd, int *saveErrno)
     const int iovcnt = (writable < sizeof(extrabuf)) ? 2 : 1;   // 当buffer中可写空间太少，就先存储到栈空间
     const ssize_t n = ::readv(fd, vec, iovcnt);// 缓冲区的数据放入到buffer
 
+    // readv和writev函数用于在一次函数调用中读、写多个非连续缓冲区。
+    // 有时也将这两个函数称为散布读（scatter read）和聚集写（gather write）。
+    // writev以顺序iov[0],iov[1]至iov[iovcnt-1]从缓冲区中聚集输出数据。writev返回输出的字节总数。
+    // readv则将读入的数据按照上述同样顺序散布到缓冲区中，readv总是先填满一个缓冲区，然后再填写下一个。
+    // readv返回读到的总字节数。如果遇到文件结尾，已无数据可读，则返回0。
+
     // 全读出来后在扩容
     if (n < 0)
     {
