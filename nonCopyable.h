@@ -9,7 +9,6 @@
 /**
  * 不允许class被拷贝
  * 当一个类继承了nonCopyable类，那么该对象派生类无法进行拷贝构造和赋值构造
- * TODO： 移动构造呢？需不需要delete
  * */
 
 class nonCopyable{
