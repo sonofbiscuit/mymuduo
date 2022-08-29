@@ -7,7 +7,7 @@ InetAddress::InetAddress(uint16_t port, std::string ip)
 {
     ::memset(&addr_, 0, sizeof(addr_));   // 清0操作
     addr_.sin_family = AF_INET;  // ipv4
-    addr_.sin_port = ::htons(port); // 本地字节序转为网络字节序   host to net   s means short 16位， 端口号0~2^16-1
+    addr_.sin_port = ::htons(port); // 本地整型字节序转为网络字节序   host to net   s means short 16位， 端口号0~2^16-1
     addr_.sin_addr.s_addr = ::inet_addr(ip.c_str());
 }
 
