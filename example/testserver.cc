@@ -3,7 +3,6 @@
 #include "../TcpServer.h"
 #include "../Logger.h"
 
-// https://github.com/S1mpleBug/muduo_cpp11.git
 class EchoServer
 {
 public:
