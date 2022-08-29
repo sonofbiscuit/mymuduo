@@ -192,7 +192,8 @@ void TcpConnection::connectDestroyed()
  * 缓冲区由满变为不满，就变成了可写
  * */
 
-// 读是相对服务器而言的 当对端客户端有数据到达 服务器端检测到EPOLLIN 就会触发该fd上的回调 handleRead取读走对端发来的数据
+// 读是相对服务器而言的
+// 当对端客户端有数据到达 服务器端检测到EPOLLIN 就会触发该fd上的回调 handleRead取读走对端发来的数据
 void TcpConnection::handleRead(Timestamp receiveTime)
 {
     int savedErrno = 0;
